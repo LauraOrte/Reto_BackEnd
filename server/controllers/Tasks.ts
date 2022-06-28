@@ -15,16 +15,20 @@ const selectTasks = async(req: Request, res: Response)=>{
 }
 
 const selectTask=async (req: Request, res: Response) => {
-    
+    try {
     let id = req.body.id;
     openDb().then(db=>{
         db.get('SELECT * FROM Tasks WHERE id=?', [id])
         .then(task=> res.json(task) );
     });
+} catch (error) {
+    return res.status(500).json(error);
+}
 }
 
 
 const insertTask = async (req: Request, res: Response)=>{
+    try {
     let task = req.body;
     openDb().then(db=>{
         db.run('INSERT INTO Tasks (tittle, description) VALUES (?,?)', [task.tittle, task.description]);
@@ -32,9 +36,13 @@ const insertTask = async (req: Request, res: Response)=>{
     res.json({
         "statusCode": 200
     })
+    } catch (error) {
+        return res.status(500).json(error);
+    }
 }
 
 const updateTask= async (req: Request, res: Response)=>{
+    try{
     let user = req.body;
     openDb().then(db=>{
         db.run('UPDATE User SET name=?, edad=? WHERE id=?', [user.name, user.edad, user.id]);
@@ -42,9 +50,13 @@ const updateTask= async (req: Request, res: Response)=>{
     res.json({
         "statusCode": 200
     })
+} catch (error) {
+    return res.status(500).json(error);
+}
 }
 
 const deleteTask = async(req: Request, res: Response)=>{
+    try {
     let id = req.body.id;
     openDb().then(db=>{
         db.get('DELETE FROM Tasks WHERE id=?', [id])
@@ -53,6 +65,9 @@ const deleteTask = async(req: Request, res: Response)=>{
     res.json({
         "statusCode": 200
     })
+} catch (error) {
+    return res.status(500).json(error);
+}
 }
 
 export const controllersTasks = {
