@@ -1,27 +1,18 @@
 import { Router } from 'express';
+import { controllersTasks} from '../controllers/Tasks';
 const router = Router();
 
 
 //Rutas
-router.get('/tasks', (req, res)=>{
-    res.send('Ver todas las tarea');
-});
+router.get('/tasks', controllersTasks.selectTasks);
 
-router.post('/tasks', (req, res)=>{
-    res.send('Crear tarea nueva');
-});
+router.post('/tasks', controllersTasks.insertTask);
 
-router.get('/tasks/:id', (req, res)=>{
-    res.send('ver Tarea por id');
-});
+router.get('/tasks/:id', controllersTasks.selectTask);
 
-router.put('/tasks/:id', (req, res)=>{
-    res.send('Actualizar tarea por id');
-});
+router.put('/tasks/:id', controllersTasks.updateTask);
 
-router.delete('/tasks/:id', (req, res)=>{
-    res.send('Eliminar tarea por id');
-});
+router.delete('/tasks/:id', controllersTasks.deleteTask);
 
 
 
