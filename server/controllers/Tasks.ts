@@ -3,7 +3,7 @@ import { openDb } from '../configDB';
 
 const createTable = async()=>{
     openDb().then(db=>{
-        db.exec('CREATE TABLE IF NOT EXISTS Tasks ( id INTEGER PRIMARY KEY AUTOINCREMENT, tittle TEXT, description TEXT)')
+        db.exec('CREATE TABLE IF NOT EXISTS Tasks ( id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT)')
     })
 }
 
@@ -31,7 +31,7 @@ const insertTask = async (req: Request, res: Response)=>{
     try {
     let task = req.body;
     openDb().then(db=>{
-        db.run('INSERT INTO Tasks (tittle, description) VALUES (?,?)', [task.tittle, task.description]);
+        db.run('INSERT INTO Tasks (title, description) VALUES (?,?)', [task.title, task.description]);
     });
     res.json({
         "statusCode": 200
@@ -43,9 +43,9 @@ const insertTask = async (req: Request, res: Response)=>{
 
 const updateTask= async (req: Request, res: Response)=>{
     try{
-    let user = req.body;
+    let task = req.body;
     openDb().then(db=>{
-        db.run('UPDATE User SET name=?, edad=? WHERE id=?', [user.name, user.edad, user.id]);
+        db.run('UPDATE Tasks SET title=?, description=? WHERE id=?', [task.title, task.description, task.id]);
     });
     res.json({
         "statusCode": 200
